@@ -6,6 +6,15 @@ Vue.use(Router)
 
 //按需加载,当渲染其他页面时才加载其组件,并缓存,减少首屏加载时间
 const Index = resolve => require(['@/views/index.vue'],resolve)
+const Category = resolve => require(['@/views/Category.vue'], resolve)
+const CategoryMain = resolve => require(['@/components/category/main.vue'], resolve)
+const Car = resolve => require(['@/views/Car.vue'],resolve)
+const Detail = resolve => require(['@/views/Detail.vue'], resolve)
+const Pay = resolve => require(['@/components/car/pay/pay.vue'], resolve)
+
+const User = resolve => require(['@/views/User.vue'], resolve)
+const Login = resolve => require(['@/views/login.vue'], resolve)
+
 
 export default new Router({
   routes: [
@@ -13,6 +22,46 @@ export default new Router({
       path: '/',
       name: '首页',
       component: Index
+    },
+    {
+      path: '/user',
+      name: '用户',
+      component: User,
+      meta: {
+           requireAuth: true,  // 添加该字段，表示进入这个路由是需要登录才能进入的
+       },
+    },
+    {
+      path:'/category/all',
+      name:'分类',
+      // redirect:'/category/all',
+      component:Category,
+      children:[
+        {
+          path:'/category/:tab',
+          component:CategoryMain
+        }
+      ]
+    },
+    {
+      path:'/car',
+      name:'购物车',
+      component:Car
+    },
+    {
+      path:'/detail',
+      name:'详情页',
+      component:Detail
+    },
+    {
+      path: '/car/pay',
+      name: '支付页',
+      component: Pay
+    },
+    {
+      path: '/login',
+      name: '登录页',
+      component: Login
     }
   ]
 })

@@ -15,9 +15,15 @@ export default {
   },
   data() {
     return {
-      fetchLoading:false,
+      // fetchLoading:true
     }
   },
+
+  computed:{
+    fetchLoading(){
+      return this.$store.state.detail.fetchLoading
+    }
+  }
 
 }
 </script>
